@@ -1,0 +1,86 @@
+<div class="page">
+  <div class="head">
+    <div>
+      <h2 class="title">Rapports</h2>
+      <p class="subtitle">Valider/refuser et commenter les rapports.</p>
+    </div>
+    <span class="chip" *ngIf="filtered.length">{{ filtered.length }} rapport(s)</span>
+  </div>
+
+  <div *ngIf="message" class="alert success">{{ message }}</div>
+  <div *ngIf="errorMessage" class="alert danger">{{ errorMessage }}</div>
+
+  <div class="card filters">
+    <input [(ngModel)]="searchText" (input)="applyFilters()" placeholder="Rechercher (étudiant, titre)"/>
+    <select [(ngModel)]="selectedStatus" (change)="applyFilters()">
+      <option value="">Tous les statuts</option>
+      <option value="submitted">submitted</option>
+      <option value="reviewing">reviewing</option>
+      <option value="validated">validated</option>
+      <option value="refused">refused</option>
+    </select>
+    <button class="btn-ghost" (click)="load()" [disabled]="loading">Rafraîchir</button>
+  </div>
+
+  <div class="card" *ngIf="loading">Chargement...</div>
+
+  <div class="card" *ngIf="!loading">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Étudiant</th>
+            <th>Titre</th>
+            <th>Fichier</th>
+            <th>Statut</th>
+            <th>Commentaire</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of filtered">
+            <td>{{ getEtudiantFullName(r) }}</td>
+            <td>{{ r.titre }}</td>
+            <td>
+              <div class="pdf-actions" *ngIf="r.fichier; else noPdf">
+                <a
+                  class="pdf-link"
+                  [href]="'http://localhost/projet_php/' + r.fichier"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Voir PDF
+                </a>
+                <a
+                  class="pdf-btn"
+                  [href]="'http://localhost/projet_php/download_rapport.php?path=' + r.fichier"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  Télécharger
+                </a>
+              </div>
+              <ng-template #noPdf>-</ng-template>
+            </td>
+            <td><span class="status-badge" [attr.data-status]="r.status">{{ r.status }}</span></td>
+            <td>
+              <textarea rows="2" [(ngModel)]="commentDraft[r.id]" placeholder="Ajouter commentaire..."></textarea>
+              <div class="old" *ngIf="r.commentaire">Actuel: {{ r.commentaire }}</div>
+            </td>
+            <td>
+              <div class="actions">
+                <button class="btn-ok" (click)="setStatus(r,'validated')" [disabled]="loading">Valider</button>
+                <button class="btn-ko" (click)="setStatus(r,'refused')" [disabled]="loading">Refuser</button>
+                <button class="btn-ghost-sm" (click)="setStatus(r,'reviewing')" [disabled]="loading">Reviewing</button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="filtered.length===0">
+            <td colspan="6" class="empty">Aucun rapport.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

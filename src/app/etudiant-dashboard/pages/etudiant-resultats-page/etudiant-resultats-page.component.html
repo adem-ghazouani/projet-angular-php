@@ -1,0 +1,49 @@
+<div class="page">
+  <div class="page-head">
+    <div>
+      <h2 class="title">Mes résultats</h2>
+      <p class="subtitle">Note finale, remarque enseignant, validation.</p>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="loading">Chargement...</div>
+  <div class="card warn" *ngIf="!loading && !rapport">
+    Aucun rapport trouvé. Soumettez d'abord votre rapport.
+  </div>
+
+  <div class="card" *ngIf="!loading && rapport">
+    <div class="top">
+      <div class="k">Rapport</div>
+      <div class="v">{{ rapport.titre }}</div>
+    </div>
+
+    <div class="grid">
+      <div class="box">
+        <div class="box-label">Statut rapport</div>
+        <div class="box-val" [attr.data-status]="rapport.status">{{ rapport.status }}</div>
+      </div>
+      <div class="box">
+        <div class="box-label">Validation finale</div>
+        <div class="box-val" [attr.data-status]="evaluation?.status || 'pending'">
+          {{ evaluation?.status || 'pending' }}
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-label">Note finale</div>
+        <div class="box-val">{{ evaluation?.note ?? '-' }}</div>
+      </div>
+    </div>
+
+    <div class="rem" *ngIf="evaluation?.remarque">
+      <div class="rem-label">Remarque enseignant</div>
+      <div class="rem-text">{{ evaluation?.remarque }}</div>
+    </div>
+
+    <div class="hint" *ngIf="!evaluation">
+      Aucune évaluation enregistrée pour le moment.
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="card danger">{{ errorMessage }}</div>
+</div>
+

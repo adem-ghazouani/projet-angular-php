@@ -1,0 +1,48 @@
+<!-- NAVBAR -->
+<nav *ngIf="!isDashboardRoute" class="public-nav navbar navbar-expand-lg">
+  <div class="container-fluid py-2">
+    <a class="navbar-brand brand-link">
+      <span class="brand-emoji">👨‍🎓</span>
+      <span>Gestion des Stagiaires</span>
+    </a>
+
+    <button class="navbar-toggler nav-toggle" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSimpleContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSimpleContent">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+
+        <ng-container *ngIf="!authService.isLoggedIn()">
+          <li class="nav-item">
+            <a class="nav-link nav-pill" routerLink="/home" routerLinkActive="nav-pill-active">Accueil</a>
+          </li>
+        </ng-container>
+
+  
+        <ng-container *ngIf="authService.isLoggedIn(); else notLoggedIn">
+          <li class="nav-item d-flex align-items-center ms-lg-2">
+            <span class="role-chip">Connecté: {{ authService.getRole() }}</span>
+            <button class="btn btn-sm btn-logout ms-2" (click)="authService.logout()">Déconnexion</button>
+          </li>
+        </ng-container>
+
+        <ng-template #notLoggedIn>
+          <li class="nav-item">
+            <a class="nav-link nav-pill" routerLink="/login">Connexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-pill nav-pill-primary" routerLink="/register">Inscription</a>
+          </li>
+        </ng-template>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="public-layout" [class.dashboard-layout]="isDashboardRoute">
+  <router-outlet></router-outlet>
+</div>

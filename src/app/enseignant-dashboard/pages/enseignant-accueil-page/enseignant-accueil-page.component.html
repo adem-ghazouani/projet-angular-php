@@ -1,0 +1,159 @@
+<div class="page">
+  <section class="hero card">
+    <div>
+      <span class="hero-badge">Accueil enseignant</span>
+      <h2 class="hero-title">Suivez vos demandes et rapports en un coup d'oeil</h2>
+      <p class="hero-text">
+        Retrouvez les validations en attente, les derniers depots et des acces rapides vers
+        les pages principales de votre espace.
+      </p>
+    </div>
+
+    <div class="hero-actions">
+      <a routerLink="/enseignant-dashboard/demandes" class="btn-primary">Voir les demandes</a>
+      <a routerLink="/enseignant-dashboard/rapports" class="btn-secondary">Voir les rapports</a>
+    </div>
+  </section>
+
+  <section class="stats-grid">
+    <article class="stat-card">
+      <div class="stat-icon icon-gold">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="3" y="3" width="14" height="14" rx="3" fill="currentColor" opacity="0.16"></rect>
+          <path d="M6.5 10h7M10 6.5v7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+        </svg>
+      </div>
+      <div class="stat-label">Demandes en attente</div>
+      <div class="stat-val">{{ pendingDemandes.length }}</div>
+      <div class="stat-sub">Dossiers a traiter rapidement</div>
+    </article>
+
+    <article class="stat-card">
+      <div class="stat-icon icon-blue">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="4" y="3" width="12" height="14" rx="2.5" fill="currentColor" opacity="0.16"></rect>
+          <path d="M7 7h6M7 10h6M7 13h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+        </svg>
+      </div>
+      <div class="stat-label">Rapports a valider</div>
+      <div class="stat-val">{{ pendingRapports.length }}</div>
+      <div class="stat-sub">Soumis ou en cours de revision</div>
+    </article>
+
+    <article class="stat-card">
+      <div class="stat-icon icon-green">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="7" fill="currentColor" opacity="0.16"></circle>
+          <path d="M7 10.5l2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </div>
+      <div class="stat-label">Total rapports</div>
+      <div class="stat-val">{{ rapports.length }}</div>
+      <div class="stat-sub">Historique des rapports soumis</div>
+    </article>
+
+    <article class="stat-card">
+      <div class="stat-icon icon-emerald">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 3l6 3.5V10c0 3.4-2.4 5.8-6 7-3.6-1.2-6-3.6-6-7V6.5L10 3z" fill="currentColor" opacity="0.16"></path>
+          <path d="M7.5 10.2l1.6 1.6 3.4-3.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </div>
+      <div class="stat-label">Total demandes</div>
+      <div class="stat-val">{{ demandes.length }}</div>
+      <div class="stat-sub">Toutes les demandes recues</div>
+    </article>
+  </section>
+
+  <div class="card danger" *ngIf="!loading && errorMessage">{{ errorMessage }}</div>
+
+  <div class="loading-wrap card" *ngIf="loading">
+    <div class="spinner"></div>
+    <span>Chargement des donnees...</span>
+  </div>
+
+  <section class="two-col" *ngIf="!loading">
+    <article class="card">
+      <div class="card-head">
+        <h2 class="card-title">Actions rapides</h2>
+      </div>
+
+      <div class="quick-grid">
+        <a routerLink="/enseignant-dashboard/demandes" class="quick-card">
+          <span class="quick-title">Demandes de stage</span>
+          <span class="quick-text">Consulter et valider les demandes en attente.</span>
+        </a>
+
+        <a routerLink="/enseignant-dashboard/rapports" class="quick-card">
+          <span class="quick-title">Rapports</span>
+          <span class="quick-text">Suivre les rapports soumis et ajouter vos retours.</span>
+        </a>
+
+        <a routerLink="/enseignant-dashboard/evaluations" class="quick-card">
+          <span class="quick-title">Evaluations</span>
+          <span class="quick-text">Acceder a la page des evaluations des stages.</span>
+        </a>
+      </div>
+    </article>
+
+    <article class="card summary-card">
+      <div class="card-head">
+        <h2 class="card-title">Resume</h2>
+      </div>
+
+      <div class="summary-list">
+        <div class="summary-item">
+          <span class="summary-label">Demandes a traiter</span>
+          <strong>{{ pendingDemandes.length }}</strong>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Rapports en revision</span>
+          <strong>{{ pendingRapports.length }}</strong>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Derniere mise a jour</span>
+          <strong>Aujourd'hui</strong>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="two-col" *ngIf="!loading">
+    <article class="card">
+      <div class="card-head">
+        <h2 class="card-title">Dernieres demandes</h2>
+        <a routerLink="/enseignant-dashboard/demandes" class="section-link">Tout voir</a>
+      </div>
+
+      <div class="list">
+        <div class="item" *ngFor="let d of pendingDemandes | slice:0:5">
+          <div class="item-main">
+            <div class="item-title">{{ d.titre_stage }}</div>
+            <div class="item-sub">{{ getEtudiantFullName(d) }} · {{ d.entreprise }}</div>
+          </div>
+          <span class="status-badge" [attr.data-status]="d.status">{{ d.status }}</span>
+        </div>
+        <div class="empty" *ngIf="pendingDemandes.length === 0">Aucune demande en attente.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <h2 class="card-title">Derniers rapports</h2>
+        <a routerLink="/enseignant-dashboard/rapports" class="section-link">Tout voir</a>
+      </div>
+
+      <div class="list">
+        <div class="item" *ngFor="let r of pendingRapports | slice:0:5">
+          <div class="item-main">
+            <div class="item-title">{{ r.titre }}</div>
+            <div class="item-sub">{{ getEtudiantFullName(r) }}</div>
+          </div>
+          <span class="status-badge" [attr.data-status]="r.status">{{ r.status }}</span>
+        </div>
+        <div class="empty" *ngIf="pendingRapports.length === 0">Aucun rapport en attente.</div>
+      </div>
+    </article>
+  </section>
+</div>
+

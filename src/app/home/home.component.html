@@ -1,0 +1,28 @@
+<section class="home-page">
+  <div class="home-card">
+    <div class="badge-line">Plateforme Gestion des Stagiaires</div>
+    <h1 class="home-title">Bienvenue sur la plateforme de gestion des stagiaires</h1>
+    <p class="home-desc">
+      Gérez les inscriptions, les validations de comptes et le suivi des stages dans un espace centralisé.
+    </p>
+
+    <div class="cta-row">
+      <a routerLink="/register" class="btn-main">
+        Créer un compte
+      </a>
+      <a routerLink="/login" class="btn-outline">
+        Connexion
+      </a>
+    </div>
+
+    <div class="illustration-box">
+      <span class="illu-emoji">👨‍🎓</span>
+      <span class="illu-text">Gestion des stagiaires</span>
+    </div>
+  </div>
+</section>
+<footer *ngIf="!isDashboardRoute" class="public-footer" style="display: flex; justify-content: center; align-items: center;">
+  <span class="footer-brand">Gestion des Stagiaires</span>
+  &nbsp;|&nbsp;
+  © {{ currentYear }} Tous droits réservés
+</footer>

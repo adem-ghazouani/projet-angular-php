@@ -1,0 +1,70 @@
+<div class="page">
+  <div class="page-head">
+    <div>
+      <h2 class="title">Mes demandes de stage</h2>
+      <p class="subtitle">Soumettre plusieurs demandes et suivre leurs statuts.</p>
+    </div>
+    <span class="status-badge" *ngIf="latestDemande" [attr.data-status]="latestDemande.status">
+      Derniere: {{ latestDemande.status }}
+    </span>
+  </div>
+
+  <div *ngIf="message" class="alert success">{{ message }}</div>
+  <div *ngIf="errorMessage" class="alert danger">{{ errorMessage }}</div>
+
+  <div class="card" *ngIf="loading">Chargement...</div>
+
+  <div class="card" *ngIf="!loading && demandesList.length">
+    <h3 class="card-title">Historique des demandes</h3>
+    <div class="demandes-list">
+      <div class="demande-item" *ngFor="let demande of demandesList">
+        <div class="demande-head">
+          <strong>{{ demande.titre_stage }}</strong>
+          <span class="status-badge" [attr.data-status]="demande.status">{{ demande.status }}</span>
+        </div>
+        <div class="rows">
+          <div class="row"><span class="k">Entreprise</span><span class="v">{{ demande.entreprise }}</span></div>
+          <div class="row"><span class="k">Durée</span><span class="v">{{ demande.duree || '-' }}</span></div>
+          <div class="row">
+            <span class="k">Description</span>
+            <span class="v" style="white-space:pre-line;">{{ demande.description || '-' }}</span>
+          </div>
+        </div>
+        <div class="hint" *ngIf="demande.status==='pending'">Votre demande est en attente de traitement.</div>
+        <div class="hint ok" *ngIf="demande.status==='accepted'">Votre demande a ete acceptee. Vous pouvez deposer votre rapport.</div>
+        <div class="hint ko" *ngIf="demande.status==='rejected'">Votre demande a ete rejetee.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="!loading">
+    <h3 class="card-title">Nouvelle demande</h3>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="grid">
+        <div class="field">
+          <label>Titre du stage *</label>
+          <input formControlName="titre_stage" placeholder="Ex : Stage Développement Web" />
+        </div>
+        <div class="field">
+          <label>Entreprise *</label>
+          <input formControlName="entreprise" placeholder="Nom de l'entreprise" />
+        </div>
+        <div class="field">
+          <label>Durée</label>
+          <input formControlName="duree" placeholder="Ex : 2 mois" />
+        </div>
+        <div class="field full">
+          <label>Description</label>
+          <textarea rows="4" formControlName="description" placeholder="Description du stage..."></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" type="submit" [disabled]="submitting || form.invalid">
+          {{ submitting ? 'Envoi...' : 'Envoyer' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

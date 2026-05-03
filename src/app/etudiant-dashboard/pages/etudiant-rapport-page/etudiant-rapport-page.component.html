@@ -1,0 +1,61 @@
+<div class="page">
+  <div class="page-head">
+    <div>
+      <h2 class="title">Mon rapport</h2>
+      <p class="subtitle">Déposer votre rapport PDF et suivre la validation.</p>
+    </div>
+    <span class="status-badge" *ngIf="rapport" [attr.data-status]="rapport.status">
+      {{ rapport.status }}
+    </span>
+  </div>
+
+  <div *ngIf="message" class="alert success">{{ message }}</div>
+  <div *ngIf="errorMessage" class="alert danger">{{ errorMessage }}</div>
+
+  <div class="card" *ngIf="loading">Chargement...</div>
+
+  <div class="card info" *ngIf="!loading && !errorMessage">
+    {{ rapportStateMessage }}
+  </div>
+
+  <div class="card" *ngIf="!loading && rapport">
+    <div class="rows">
+      <div class="row"><span class="k">Titre</span><span class="v">{{ rapport.titre }}</span></div>
+      <div class="row"><span class="k">Fichier</span><span class="v">{{ rapport.fichier || '-' }}</span></div>
+      <div class="row"><span class="k">Commentaire enseignant</span><span class="v">{{ rapport.commentaire || '-' }}</span></div>
+    </div>
+  </div>
+
+  <div class="card warn" *ngIf="!loading && (!demande || demande.status!=='accepted')">
+    <strong>Info</strong> : vous pouvez soumettre le rapport seulement après acceptation de votre demande de stage.
+    <div class="small">État actuel: {{ debugHint }}</div>
+  </div>
+
+  <div class="card" *ngIf="!loading && canSubmitRapport">
+    <h3 class="card-title">Soumettre le rapport</h3>
+    <div class="small">État actuel: {{ debugHint }}</div>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="grid">
+        <div class="field">
+          <label>Titre rapport *</label>
+          <input formControlName="titre" placeholder="Ex : Rapport de stage 2026" />
+        </div>
+        <div class="field">
+          <label>Fichier PDF *</label>
+          <input type="file" accept="application/pdf" (change)="onFileChange($event)" />
+          <div class="file-name" *ngIf="file">{{ file.name }}</div>
+        </div>
+        <div class="field full">
+          <label>Commentaire</label>
+          <textarea rows="3" formControlName="commentaire" placeholder="Message pour l'enseignant..."></textarea>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn-primary" type="submit" [disabled]="submitting || form.invalid">
+          {{ submitting ? 'Envoi...' : 'Soumettre' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

@@ -1,0 +1,103 @@
+<div class="users-layout">
+  <div class="header">
+    <div>
+      <a routerLink="/admin-dashboard" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Tableau de bord
+      </a>
+      <h1 *ngIf="mode === 'list'">Liste des utilisateurs</h1>
+      <h1 *ngIf="mode === 'add'">Ajouter un utilisateur</h1>
+      <h1 *ngIf="mode === 'edit'">Modifier un utilisateur</h1>
+      <p>CRUD utilisateurs (accès administrateur uniquement).</p>
+    </div>
+    <div class="actions">
+      <a *ngIf="mode === 'list'" routerLink="/liste-utilisateur/ajouter" class="btn-primary">Ajouter membre</a>
+      <a routerLink="/validation" class="btn-secondary">Page validation</a>
+    </div>
+  </div>
+
+  <div *ngIf="message" class="alert success">{{ message }}</div>
+  <div *ngIf="errorMessage" class="alert danger">{{ errorMessage }}</div>
+
+  <div class="card filters" *ngIf="mode === 'list'">
+    <input
+      [(ngModel)]="searchText"
+      (input)="applyFilters()"
+      placeholder="Rechercher par nom, prénom ou email"
+    />
+    <select [(ngModel)]="selectedRole" (change)="applyFilters()">
+      <option value="">Tous les rôles</option>
+      <option *ngFor="let role of roles" [value]="role">{{ role  }}</option>
+    </select>
+    <select [(ngModel)]="selectedStatus" (change)="applyFilters()">
+      <option value="">Tous les statuts</option>
+      <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+    </select>
+  </div>
+
+  <div class="card" *ngIf="isAdmin && mode !== 'list'">
+    <h2>{{ editing ? 'Modifier utilisateur' : 'Ajouter utilisateur' }}</h2>
+    <div class="form-grid">
+      <input [(ngModel)]="userForm.nom" placeholder="Nom" />
+      <input [(ngModel)]="userForm.prenom" placeholder="Prénom" />
+      <input [(ngModel)]="userForm.email" placeholder="Email" />
+      <input [(ngModel)]="userForm.mot_de_passe" type="password" placeholder="Mot de passe" />
+      <select [(ngModel)]="userForm.role">
+        <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+      </select>
+      <select [(ngModel)]="userForm.status">
+        <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+      </select>
+    </div>
+    <div class="actions">
+      <button class="btn-primary" (click)="save()">
+        {{ editing ? 'Modifier' : 'Ajouter' }}
+      </button>
+      <a routerLink="/liste-utilisateur" class="btn-ghost">Retour liste</a>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="mode === 'list'">
+    <div class="table-head">
+      <h2>Utilisateurs</h2>
+      <span>{{ filteredUsers.length }} résultat(s)</span>
+    </div>
+
+    <div *ngIf="loading" class="loading">Chargement...</div>
+
+    <div class="table-wrap" *ngIf="!loading">
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Statut</th>
+            <th *ngIf="isAdmin">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of filteredUsers">
+            <td>{{ u.prenom }} {{ u.nom }}</td>
+            <td>{{ u.email }}</td>
+            <td><span class="badge">{{ u.role }}</span></td>
+            <td><span class="badge status">{{ u.status }}</span></td>
+            <td *ngIf="isAdmin">
+              <div class="row-actions">
+                <button class="btn-ghost" (click)="edit(u)">Modifier</button>
+                <button class="btn-danger" (click)="remove(u.id)">Supprimer</button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="filteredUsers.length === 0">
+            <td [attr.colspan]="isAdmin ? 5 : 4" class="empty">
+              Aucun utilisateur trouvé.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

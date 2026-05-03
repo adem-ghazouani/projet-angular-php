@@ -1,0 +1,106 @@
+/* RESET GLOBAL (important) */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* CONTAINER GLOBAL */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* NAVBAR */
+.public-nav {
+  background: #0f172a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* BRAND */
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  text-decoration: none;
+}
+
+.brand-emoji {
+  font-size: 20px;
+}
+
+/* NAV ITEMS */
+.nav-pill {
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 500;
+  border-radius: 999px;
+  padding: 8px 14px;
+  transition: 0.15s ease;
+
+  &:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+.nav-pill-active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.nav-pill-primary {
+  background: #1d4ed8;
+  color: #fff;
+
+  &:hover {
+    background: #1e40af;
+  }
+}
+
+/* USER */
+.role-chip {
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.btn-logout {
+  border: 1px solid #cbd5e1;
+  color: #e2e8f0;
+  border-radius: 10px;
+  font-weight: 600;
+
+  &:hover {
+    background: #1e293b;
+    color: #fff;
+    border-color: #94a3b8;
+  }
+}
+
+/* MAIN CONTENT (IMPORTANT) */
+.public-layout {
+  flex: 1; // 🔥 permet au footer de rester en bas
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+/* DASHBOARD */
+.dashboard-layout {
+  background: transparent;
+  padding: 0;
+}
+
+/* FOOTER */
+.public-footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 13px;
+  color: #64748b;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}

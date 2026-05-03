@@ -1,0 +1,126 @@
+<div class="val-layout">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="val-header">
+    <div class="val-header-left">
+      <a routerLink="/admin-dashboard" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Tableau de bord
+      </a>
+      <div class="val-title-wrap">
+        <h1 class="val-title">Validation des comptes</h1>
+        <span class="val-subtitle">Gérer les inscriptions en attente</span>
+      </div>
+      <a routerLink="/liste-utilisateur" class="back-link">Voir la liste des utilisateurs</a>
+    </div>
+    <div class="val-header-right" *ngIf="pendingUsers.length > 0">
+      <span class="chip-pending">
+        <span class="chip-dot"></span>
+        {{ pendingUsers.length }} en attente
+      </span>
+    </div>
+  </div>
+
+  <!-- ═══ ALERTS ═══ -->
+  <div *ngIf="message" class="alert alert-success">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+    {{ message }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M6 6l4 4M10 6l-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+    {{ errorMessage }}
+  </div>
+
+  <!-- ═══ LOADING ═══ -->
+  <div *ngIf="loading" class="loading-wrap">
+    <div class="spinner"></div>
+    <span>Chargement...</span>
+  </div>
+
+  <!-- ═══ TABLE ═══ -->
+  <div *ngIf="!loading" class="val-card">
+
+    <!-- Aucun compte -->
+    <div *ngIf="pendingUsers.length === 0" class="empty-state">
+      <div class="empty-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="18" stroke="#d1d5db" stroke-width="1.5"/>
+          <path d="M12 20l5 5 11-11" stroke="#d1d5db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p class="empty-text">Aucun compte en attente de validation</p>
+      <span class="empty-sub">Tous les comptes ont été traités</span>
+    </div>
+
+    <!-- Tableau -->
+    <div *ngIf="pendingUsers.length > 0" class="table-wrap">
+      <table class="val-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Utilisateur</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Date d'inscription</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of pendingUsers" class="val-row">
+            <td class="td-id">{{ user?.id ?? '-' }}</td>
+
+            <td>
+              <div class="td-user">
+                <div class="u-av" [attr.data-role]="user.role">
+                  {{ getInitials(user) }}
+                </div>
+                <div>
+                  <div class="u-name">{{ user.prenom }} {{ user.nom }}</div>
+                </div>
+              </div>
+            </td>
+
+            <td class="td-email">{{ user?.email ?? '-' }}</td>
+
+            <td>
+              <span class="role-badge" [attr.data-role]="user.role">{{ user.role }}</span>
+            </td>
+
+            <td class="td-date">{{ user?.created_at | slice:0:10 }}</td>
+
+            <td>
+              <span class="status-badge" data-status="pending">En attente</span>
+            </td>
+
+            <td>
+              <div class="action-btns">
+                <button class="btn-ok" (click)="accepter(user)" [disabled]="loading">
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                    <path d="M2 6.5l3 3 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  Accepter
+                </button>
+                <button class="btn-ko" (click)="refuser(user)" [disabled]="loading">
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                    <path d="M2.5 2.5l8 8M10.5 2.5l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                  Refuser
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

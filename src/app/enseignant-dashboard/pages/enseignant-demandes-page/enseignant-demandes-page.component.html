@@ -1,0 +1,61 @@
+<div class="page">
+  <div class="head">
+    <div>
+      <h2 class="title">Demandes</h2>
+      <p class="subtitle">Traiter les demandes de stage des étudiants.</p>
+    </div>
+    <span class="chip" *ngIf="filtered.length">{{ filtered.length }} demande(s)</span>
+  </div>
+
+  <div *ngIf="message" class="alert success">{{ message }}</div>
+  <div *ngIf="errorMessage" class="alert danger">{{ errorMessage }}</div>
+
+  <div class="card filters">
+    <input [(ngModel)]="searchText" (input)="applyFilters()" placeholder="Rechercher (étudiant, titre, entreprise)"/>
+    <select [(ngModel)]="selectedStatus" (change)="applyFilters()">
+      <option value="">Tous les statuts</option>
+      <option value="pending">pending</option>
+      <option value="accepted">accepted</option>
+      <option value="rejected">rejected</option>
+    </select>
+    <button class="btn-ghost" (click)="load()" [disabled]="loading">Rafraîchir</button>
+  </div>
+
+  <div class="card" *ngIf="loading">Chargement...</div>
+
+  <div class="card" *ngIf="!loading">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Étudiant</th>
+            <th>Titre</th>
+            <th>Entreprise</th>
+            <th>Durée</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of filtered">
+            <td>{{ getEtudiantFullName(d) }}</td>
+            <td>{{ d.titre_stage }}</td>
+            <td>{{ d.entreprise }}</td>
+            <td>{{ d.duree || '-' }}</td>
+            <td><span class="status-badge" [attr.data-status]="d.status">{{ d.status }}</span></td>
+            <td>
+              <div class="actions">
+                <button class="btn-ok" (click)="setStatus(d,'accepted')" [disabled]="loading || d.status!=='pending'">Accepter</button>
+                <button class="btn-ko" (click)="setStatus(d,'rejected')" [disabled]="loading || d.status!=='pending'">Refuser</button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="filtered.length===0">
+            <td colspan="6" class="empty">Aucune demande.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

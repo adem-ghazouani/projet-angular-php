@@ -1,0 +1,101 @@
+
+  <main class="main">
+    <div class="page-header">
+      <div>
+        <div class="page-date">Vue globale de la plateforme</div>
+        <h1 class="page-title">Statistiques administrateur</h1>
+      </div>
+      <button class="btn-refresh" (click)="loadAll()">Actualiser</button>
+    </div>
+
+    <div *ngIf="loading" class="loading-wrap">
+      <div class="spinner"></div>
+      <span>Chargement des statistiques...</span>
+    </div>
+
+    <ng-container *ngIf="!loading">
+      <h2 class="section-title">Utilisateurs</h2>
+      <div class="kpi-grid kpi-grid-4">
+        <div class="kpi-card">
+          <div class="kpi-value">{{ totalUsers }}</div>
+          <div class="kpi-label">Total comptes</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value">{{ approvedUsers }}</div>
+          <div class="kpi-label">Comptes valides</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value">{{ pendingUsers }}</div>
+          <div class="kpi-label">En attente</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value">{{ rejectedUsers }}</div>
+          <div class="kpi-label">Refuses</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head">
+            <h3 class="card-title">Repartition des roles</h3>
+          </div>
+          <div class="summary-list">
+            <div class="summary-item"><span class="sum-label">Etudiants</span><span class="sum-val">{{ totalEtudiants }}</span></div>
+            <div class="summary-item"><span class="sum-label">Enseignants</span><span class="sum-val">{{ totalEnseignants }}</span></div>
+            <div class="summary-item"><span class="sum-label">Admins</span><span class="sum-val">{{ totalAdmins }}</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <h3 class="card-title">Performance</h3>
+          </div>
+          <div class="summary-list">
+            <div class="summary-item"><span class="sum-label">Taux validation comptes</span><span class="sum-val">{{ tauxValidation }}%</span></div>
+            <div class="summary-item"><span class="sum-label">Taux acceptation demandes</span><span class="sum-val">{{ tauxAcceptation }}%</span></div>
+            <div class="summary-item"><span class="sum-label">Taux validation rapports</span><span class="sum-val">{{ tauxRapports }}%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-full">
+        <div class="card-head">
+          <h3 class="card-title">Inscriptions des 6 derniers mois</h3>
+        </div>
+        <div class="chart-bars">
+          <div class="chart-col" *ngFor="let m of inscriptionsParMois">
+            <div class="chart-val">{{ m.count }}</div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar" [style.height.%]="barHeight(m.count)" style="background:#3B82F6;"></div>
+            </div>
+            <div class="chart-label">{{ m.mois }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-full">
+        <div class="card-head">
+          <h3 class="card-title">Derniers utilisateurs</h3>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Utilisateur</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Statut</th>
+              <th>Date inscription</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of recentUsers">
+              <td class="td-user"><div class="u-av" [attr.data-role]="u.role">{{ getInitials(u) }}</div><span>{{ u.prenom }} {{ u.nom }}</span></td>
+              <td class="td-muted">{{ u.email }}</td>
+              <td><span class="role-badge" [attr.data-role]="u.role">{{ u.role }}</span></td>
+              <td><span class="status-badge" [attr.data-status]="u.status">{{ u.status }}</span></td>
+              <td class="td-sm td-muted">{{ formatDate(u.created_at) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </main>

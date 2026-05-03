@@ -1,0 +1,481 @@
+// ═══════════════════════════════════════════════
+// REGISTER PAGE — adapté au style des dashboards
+// ═══════════════════════════════════════════════
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.auth-page {
+  display: flex;
+  min-height: 100%;
+  font-family: 'Sora', system-ui, sans-serif;
+}
+
+// ════════════════════════════════════════════════
+// PANNEAU GAUCHE
+// ════════════════════════════════════════════════
+.auth-left {
+  width: 400px;
+  flex-shrink: 0;
+  background: #0f172a;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 40px;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(124,58,237,0.12);
+    top: -80px; right: -80px;
+    pointer-events: none;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(16,185,129,0.1);
+    bottom: 40px; left: -60px;
+    pointer-events: none;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+
+  .brand-icon {
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .brand-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.3px;
+  }
+}
+
+.left-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  padding: 36px 0;
+
+  .left-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .left-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+}
+
+// Étapes visuelles gauche
+.step-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.sv-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-bottom: 24px;
+  position: relative;
+
+  &:last-child { padding-bottom: 0; }
+
+  .sv-circle {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px; font-weight: 600;
+    flex-shrink: 0;
+    transition: all 0.25s;
+
+    &.sv-inactive {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.25);
+    }
+  }
+
+  &.sv-active .sv-circle {
+    background: #3B82F6;
+    border-color: #3B82F6;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.25);
+  }
+
+  &.sv-done .sv-circle {
+    background: #10B981;
+    border-color: #10B981;
+    color: #fff;
+  }
+
+  .sv-line {
+    position: absolute;
+    left: 14px;
+    top: 30px;
+    width: 2px;
+    height: calc(100% - 30px);
+    background: rgba(255,255,255,0.1);
+
+    &.sv-line-done { background: #10B981; }
+  }
+
+  .sv-title { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.8); margin-bottom: 2px; }
+  .sv-sub   { font-size: 11px; color: rgba(255,255,255,0.35); }
+}
+
+.role-chips {
+  display: flex;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.chip {
+  border-radius: 20px;
+  padding: 5px 13px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.12);
+
+  &.chip-blue   { background: rgba(59,130,246,0.18);  color: #93C5FD; }
+  &.chip-green  { background: rgba(16,185,129,0.18);  color: #6EE7B7; }
+  &.chip-purple { background: rgba(124,58,237,0.18);  color: #C4B5FD; }
+}
+
+// ════════════════════════════════════════════════
+// PANNEAU DROIT
+// ════════════════════════════════════════════════
+.auth-right {
+  flex: 1;
+  background: #F8FAFC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.form-card {
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid #E9EEF4;
+  padding: 36px 40px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.06);
+}
+
+.form-head {
+  text-align: center;
+  margin-bottom: 24px;
+
+  .form-logo {
+    width: 50px; height: 50px;
+    background: #EFF6FF;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px;
+  }
+
+  .form-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.3px;
+    margin-bottom: 4px;
+  }
+
+  .form-sub {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 14px;
+  }
+}
+
+// Barre de progression
+.progress-bar {
+  height: 4px;
+  background: #F1F5F9;
+  border-radius: 2px;
+  overflow: hidden;
+
+  .progress-fill {
+    height: 100%;
+    background: #1d4ed8;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+}
+
+// ── Alerts ───────────────────────────────────────
+.alert-success {
+  display: flex; align-items: center; gap: 8px;
+  background: #F0FDF4; border: 1px solid #BBF7D0;
+  color: #065F46; border-radius: 10px;
+  padding: 11px 14px; font-size: 13px; margin-bottom: 18px;
+}
+
+.alert-error {
+  display: flex; align-items: center; gap: 8px;
+  background: #FEF2F2; border: 1px solid #FECACA;
+  color: #DC2626; border-radius: 10px;
+  padding: 11px 14px; font-size: 13px; margin-bottom: 18px;
+}
+
+// ── Champs ────────────────────────────────────────
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field {
+  margin-bottom: 16px;
+  min-width: 0;
+
+  .field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 7px;
+  }
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 11px;
+  padding: 0 14px;
+  background: #fff;
+  transition: all 0.15s;
+  width: 100%;
+
+  &:focus-within {
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+  }
+
+  &.is-error {
+    border-color: #F87171;
+    &:focus-within { box-shadow: 0 0 0 3px rgba(248,113,113,0.1); }
+  }
+
+  .field-icon { color: #9ca3af; flex-shrink: 0; }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    border: none; outline: none;
+    font-size: 14px; color: #111827;
+    padding: 12px 0;
+    font-family: inherit;
+    background: transparent;
+    &::placeholder { color: #D1D5DB; }
+  }
+
+  .pw-toggle {
+    background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; padding: 0; flex-shrink: 0;
+  }
+}
+
+.field-err {
+  display: block;
+  font-size: 12px;
+  color: #EF4444;
+  margin-top: 5px;
+}
+
+// ── Sélecteur de rôle ─────────────────────────────
+.role-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.role-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+
+  &:hover {
+    border-color: #BFDBFE;
+    background: #F8FAFF;
+  }
+
+  &.role-selected {
+    border-color: #1d4ed8;
+    background: #EFF6FF;
+  }
+
+  .role-opt-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+
+    &.purple { background: #EDE9FE; color: #5B21B6; }
+    &.green  { background: #D1FAE5; color: #065F46; }
+  }
+
+  .role-opt-name { font-size: 14px; font-weight: 600; color: #0f172a; }
+  .role-opt-desc { font-size: 11px; color: #9ca3af; margin-top: 2px; }
+
+  .role-check {
+    position: absolute;
+    right: 14px;
+    width: 22px; height: 22px;
+    background: #1d4ed8;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+}
+
+// ── Info box ──────────────────────────────────────
+.info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 12px;
+  color: #1E40AF;
+  line-height: 1.5;
+  margin-bottom: 18px;
+
+  svg { flex-shrink: 0; margin-top: 1px; }
+}
+
+// ── Boutons ───────────────────────────────────────
+.btn-row {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1.5px solid #E5E7EB;
+  background: #fff;
+  color: #6b7280;
+  border-radius: 11px;
+  padding: 13px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+
+  &:hover { background: #F9FAFB; border-color: #D1D5DB; }
+}
+
+.btn-submit {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #1d4ed8;
+  color: #fff;
+  border: none;
+  border-radius: 11px;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+
+  &:hover:not(:disabled) {
+    background: #1e40af;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(29,78,216,0.3);
+  }
+
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  // Quand utilisé sans btn-row (étape 1)
+  &:not(.btn-submit-sm) { width: 100%; margin-top: 4px; }
+}
+
+.spinner-sm {
+  width: 15px; height: 15px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// ── Footer ────────────────────────────────────────
+.form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+  font-size: 13px;
+  color: #9ca3af;
+
+  .footer-link {
+    color: #1d4ed8;
+    font-weight: 500;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+
+  .divider { color: #E5E7EB; }
+}
+
+// ── Responsive ────────────────────────────────────
+@media (max-width: 800px) {
+  .auth-page  { flex-direction: column; }
+  .auth-left  { width: 100%; padding: 24px; min-height: auto; }
+  .left-body  { padding: 20px 0; .left-title { font-size: 22px; } }
+  .step-visual { display: none; }
+  .field-row  { grid-template-columns: 1fr; }
+}
