@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Demande, DemandeStatus, Rapport, RapportStatus } from '../models/stage.model';
-import { environment } from '../../../environments/environment';
+import { Demande, DemandeStatus, Rapport, RapportStatus } from '../stage-workflow.model';
 
 @Injectable({ providedIn: 'root' })
 export class StageService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = 'http://localhost/projet_php/';
 
   constructor(private http: HttpClient) {}
 

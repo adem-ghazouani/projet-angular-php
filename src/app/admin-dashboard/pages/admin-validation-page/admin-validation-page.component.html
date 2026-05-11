@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-head">
+    <h2>Validation des comptes</h2>
+    <span>{{ pendingUsers.length }} en attente</span>
+  </div>
+
+  <div class="loading" *ngIf="loading">Chargement...</div>
+  <div class="error" *ngIf="!loading && errorMessage">{{ errorMessage }}</div>
+
+  <div class="list" *ngIf="!loading && !errorMessage">
+    <div class="item" *ngFor="let user of pendingUsers">
+      <div class="avatar">{{ getInitials(user) }}</div>
+      <div class="meta">
+        <div class="name">{{ user.prenom }} {{ user.nom }}</div>
+        <div class="email">{{ user.email }}</div>
+      </div>
+      <span class="role">{{ user.role }}</span>
+      <div class="actions">
+        <button class="ok" (click)="approve(user)">Valider</button>
+        <button class="ko" (click)="reject(user)">Refuser</button>
+      </div>
+    </div>
+    <div class="empty" *ngIf="pendingUsers.length === 0">Aucun compte en attente.</div>
+  </div>
+</div>

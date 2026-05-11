@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { EtudiantDemandePageComponent } from './pages/etudiant-demande-page/etudiant-demande-page.component';
 import { EtudiantRapportPageComponent } from './pages/etudiant-rapport-page/etudiant-rapport-page.component';
 import { EtudiantResultatsPageComponent } from './pages/etudiant-resultats-page/etudiant-resultats-page.component';
+import { EtudiantAccueilPageComponent } from './pages/etudiant-accueil-page/etudiant-accueil-page.component';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
     component: EtudiantDashboardComponent,
     children: [
       { path: '', redirectTo: 'accueil', pathMatch: 'full' },
-      { path: 'accueil', component: EtudiantResultatsPageComponent },
+      { path: 'accueil', component: EtudiantAccueilPageComponent },
       { path: 'demande', component: EtudiantDemandePageComponent },
       { path: 'rapport', component: EtudiantRapportPageComponent },
       { path: 'resultats', component: EtudiantResultatsPageComponent }
@@ -25,6 +26,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     EtudiantDashboardComponent,
+    EtudiantAccueilPageComponent,
     EtudiantDemandePageComponent,
     EtudiantRapportPageComponent,
     EtudiantResultatsPageComponent

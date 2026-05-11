@@ -1,7 +1,7 @@
 <div class="users-layout">
   <div class="header">
     <div>
-      <a routerLink="/admin-dashboard" class="back-link">
+      <a routerLink="/admin-dashboard/accueil" class="back-link">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -13,8 +13,8 @@
       <p>CRUD utilisateurs (accès administrateur uniquement).</p>
     </div>
     <div class="actions">
-      <a *ngIf="mode === 'list'" routerLink="/liste-utilisateur/ajouter" class="btn-primary">Ajouter membre</a>
-      <a routerLink="/validation" class="btn-secondary">Page validation</a>
+      <a *ngIf="mode === 'list'" routerLink="/admin-dashboard/utilisateurs/ajouter" class="btn-primary">Ajouter membre</a>
+      <a routerLink="/admin-dashboard/validation" class="btn-secondary">Page validation</a>
     </div>
   </div>
 
@@ -55,7 +55,7 @@
       <button class="btn-primary" (click)="save()">
         {{ editing ? 'Modifier' : 'Ajouter' }}
       </button>
-      <a routerLink="/liste-utilisateur" class="btn-ghost">Retour liste</a>
+      <a routerLink="/admin-dashboard/utilisateurs" class="btn-ghost">Retour liste</a>
     </div>
   </div>
 

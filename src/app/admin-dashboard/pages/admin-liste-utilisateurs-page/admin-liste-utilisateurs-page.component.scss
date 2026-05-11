@@ -1,0 +1,8 @@
+.card { background:#fff; border:1px solid #e9eef4; border-radius:12px; padding:16px; }
+.head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:10px; }
+.head h2 { margin:0; font-size:16px; }
+.head input { border:1px solid #dbe3ee; border-radius:8px; padding:7px 10px; min-width:220px; }
+.table { width:100%; border-collapse:collapse; }
+.table th, .table td { text-align:left; padding:10px; border-bottom:1px solid #eef2f7; font-size:13px; }
+button { border:1px solid #fecaca; background:#fee2e2; color:#991b1b; border-radius:8px; padding:5px 10px; cursor:pointer; font-size:12px; }
+.loading { color:#64748b; font-size:13px; }

@@ -1,0 +1,5 @@
+.stats-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.stat-card { background:#fff; border:1px solid #e9eef4; border-radius:12px; padding:16px; }
+.label { color:#64748b; font-size:12px; }
+.value { color:#0f172a; font-size:30px; font-weight:700; margin-top:6px; }
+.loading { color:#64748b; font-size:13px; }

@@ -8,6 +8,7 @@ export interface Demande {
   etudiant_prenom?: string;
   titre: string;
   entreprise: string;
+  specialite: string;
   duree: string;
   description: string;
   status: DemandeStatus;

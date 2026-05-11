@@ -45,6 +45,15 @@
   .page-title { font-size:22px; font-weight:700; color:#1e1b4b; letter-spacing:-.4px; }
 }
 
+.header-right {
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end;
+}
+
+.welcome-chip {
+  background:#fff; border:1px solid #DDD6FE; border-radius:20px;
+  padding:8px 16px; font-size:13px; color:#5B21B6; font-weight:500;
+}
+
 .status-chip {
   border-radius:20px; padding:8px 16px; font-size:13px; font-weight:600;
   &[data-status="pending"]  { background:#FEF3C7; color:#92400E; }

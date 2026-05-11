@@ -24,6 +24,7 @@
         </div>
         <div class="rows">
           <div class="row"><span class="k">Entreprise</span><span class="v">{{ demande.entreprise }}</span></div>
+          <div class="row"><span class="k">Spécialité</span><span class="v">{{ demande.specialite || '-' }}</span></div>
           <div class="row"><span class="k">Durée</span><span class="v">{{ demande.duree || '-' }}</span></div>
           <div class="row">
             <span class="k">Description</span>
@@ -48,6 +49,10 @@
         <div class="field">
           <label>Entreprise *</label>
           <input formControlName="entreprise" placeholder="Nom de l'entreprise" />
+        </div>
+        <div class="field">
+          <label>Spécialité *</label>
+          <input formControlName="specialite" placeholder="Ex : Informatique, Gestion..." maxlength="150" />
         </div>
         <div class="field">
           <label>Durée</label>

@@ -7,6 +7,7 @@ export interface Demande {
   user_id: number;
   titre_stage: string;
   entreprise: string;
+  specialite: string;
   duree?: string | null;
   description?: string | null;
   status: DemandeStatus;

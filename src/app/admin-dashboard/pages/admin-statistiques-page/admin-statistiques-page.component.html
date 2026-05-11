@@ -1,0 +1,9 @@
+<div class="stats-grid" *ngIf="!loading">
+  <article class="stat-card"><div class="label">Utilisateurs</div><div class="value">{{ totalUsers }}</div></article>
+  <article class="stat-card"><div class="label">Etudiants</div><div class="value">{{ totalEtudiants }}</div></article>
+  <article class="stat-card"><div class="label">Enseignants</div><div class="value">{{ totalEnseignants }}</div></article>
+  <article class="stat-card"><div class="label">Demandes</div><div class="value">{{ totalDemandes }}</div></article>
+  <article class="stat-card"><div class="label">Rapports</div><div class="value">{{ totalRapports }}</div></article>
+  <article class="stat-card"><div class="label">Rapports valides</div><div class="value">{{ validatedRapports }}</div></article>
+</div>
+<div class="loading" *ngIf="loading">Chargement des statistiques...</div>

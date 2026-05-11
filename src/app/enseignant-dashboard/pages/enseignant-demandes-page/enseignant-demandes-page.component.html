@@ -11,7 +11,7 @@
   <div *ngIf="errorMessage" class="alert danger">{{ errorMessage }}</div>
 
   <div class="card filters">
-    <input [(ngModel)]="searchText" (input)="applyFilters()" placeholder="Rechercher (étudiant, titre, entreprise)"/>
+    <input [(ngModel)]="searchText" (input)="applyFilters()" placeholder="Rechercher (étudiant, titre, entreprise, spécialité)"/>
     <select [(ngModel)]="selectedStatus" (change)="applyFilters()">
       <option value="">Tous les statuts</option>
       <option value="pending">pending</option>
@@ -41,6 +41,7 @@
             <td>{{ getEtudiantFullName(d) }}</td>
             <td>{{ d.titre_stage }}</td>
             <td>{{ d.entreprise }}</td>
+            <td>{{ d.specialite || '-' }}</td>
             <td>{{ d.duree || '-' }}</td>
             <td><span class="status-badge" [attr.data-status]="d.status">{{ d.status }}</span></td>
             <td>
@@ -51,7 +52,7 @@
             </td>
           </tr>
           <tr *ngIf="filtered.length===0">
-            <td colspan="6" class="empty">Aucune demande.</td>
+            <td colspan="7" class="empty">Aucune demande.</td>
           </tr>
         </tbody>
       </table>

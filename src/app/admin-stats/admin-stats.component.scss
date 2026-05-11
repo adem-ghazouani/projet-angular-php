@@ -44,7 +44,14 @@
 // ════════════════════════════════════════════════════════
 // MAIN
 // ════════════════════════════════════════════════════════
-.main { margin-left:240px; flex:1; padding:28px; background:#F8FAFC; min-height:100vh; }
+/* Intégré dans le shell admin (pas de seconde marge latérale) */
+.admin-stats-root {
+  margin-left: 0;
+  flex: 1;
+  padding: 0;
+  background: transparent;
+  min-height: auto;
+}
 
 .page-header {
   display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;

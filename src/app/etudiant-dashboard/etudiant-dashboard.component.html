@@ -32,11 +32,6 @@
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v4l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         Mes résultats
       </a>
-      
-      <a class="nav-link">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M2 14c0-3.3 2.7-5 6-5s6 1.7 6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        Mon profil
-      </a>
     </nav>
 
     <div class="sidebar-footer">
@@ -57,11 +52,14 @@
     <div class="page-header">
       <div>
         <div class="page-date">{{ today }}</div>
-        <h1 class="page-title">Bonjour, {{ currentUser?.prenom }} 👋</h1>
+        <h1 class="page-title">Espace Étudiant</h1>
       </div>
-      <span class="status-chip" [attr.data-status]="currentUser?.status">
-        Compte : {{ currentUser?.status }}
-      </span>
+      <div class="header-right">
+        <div class="welcome-chip">Bonjour {{ currentUser?.prenom }} 👋</div>
+        <span class="status-chip" [attr.data-status]="currentUser?.status">
+          Compte : {{ currentUser?.status }}
+        </span>
+      </div>
     </div>
 
     <div *ngIf="loading" class="loading-wrap"><div class="spinner"></div></div>

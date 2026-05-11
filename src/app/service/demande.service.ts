@@ -9,7 +9,9 @@ export class DemandeService {
 
   constructor(private http: HttpClient) {}
 
-  createDemande(payload: Pick<Demande, 'user_id' | 'titre_stage' | 'entreprise'> & Partial<Demande>): Observable<any> {
+  createDemande(
+    payload: Pick<Demande, 'user_id' | 'titre_stage' | 'entreprise' | 'specialite'> & Partial<Demande>
+  ): Observable<any> {
     return this.http.post(`${this.apiUrl}create_demande.php`, payload);
   }
 

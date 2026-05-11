@@ -3,49 +3,27 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserLoginComponent } from './login/user-login.component';
 import { UserRegisterComponent } from './register/user-register.component';
 import { HomeComponent } from './home/home.component';
-import { UserValidationComponent } from './validation-compte/validation-compte.component';
 import { AuthGuard } from './auth/auth.guard';
-import { ListeUtilisateurComponent } from './liste-utilisateur/liste-utilisateur.component';
-import { AdminStatsComponent } from './admin-stats/admin-stats.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: UserLoginComponent },
   { path: 'register', component: UserRegisterComponent },
-  { path: 'validation', component: UserValidationComponent },
-  {
-    path: 'liste-utilisateur',
-    component: ListeUtilisateurComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['admin'] }
-  },
-  {
-    path: 'liste-utilisateur/ajouter',
-    component: ListeUtilisateurComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['admin'] }
-  },
+  { path: 'validation', redirectTo: 'admin-dashboard/validation', pathMatch: 'full' },
+  { path: 'liste-utilisateur', redirectTo: 'admin-dashboard/utilisateurs', pathMatch: 'full' },
+  { path: 'liste-utilisateur/ajouter', redirectTo: 'admin-dashboard/utilisateurs/ajouter', pathMatch: 'full' },
   {
     path: 'liste-utilisateur/modifier/:id',
-    component: ListeUtilisateurComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['admin'] }
+    redirectTo: 'admin-dashboard/utilisateurs/modifier/:id'
   },
-  {
-    path: 'admin-stats',
-    component: AdminStatsComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['admin'] }
-  },
+  { path: 'admin-stats', redirectTo: 'admin-dashboard/statistiques', pathMatch: 'full' },
   {
     path: 'admin-dashboard',
     canActivate: [AuthGuard],
     data: { roles: ['admin'] },
     loadChildren: () =>
-      import('./admin-dashboard/admin-dashboard.module').then(
-        (m) => m.AdminDashboardModule
-      ),
+      import('./admin-dashboard/admin-dashboard.module').then((m) => m.AdminDashboardModule)
   },
   {
     path: 'enseignant-dashboard',
@@ -54,7 +32,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./enseignant-dashboard/enseignant-dashboard.module').then(
         (m) => m.EnseignantDashboardModule
-      ),
+      )
   },
   {
     path: 'etudiant-dashboard',
@@ -63,9 +41,9 @@ const routes: Routes = [
     loadChildren: () =>
       import('./etudiant-dashboard/etudiant-dashboard.module').then(
         (m) => m.EtudiantDashboardModule
-      ),
+      )
   },
-  { path: '**', redirectTo: 'home' },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

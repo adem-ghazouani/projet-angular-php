@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="head">
+    <h2>Liste des utilisateurs</h2>
+    <input [(ngModel)]="searchText" placeholder="Rechercher..." />
+  </div>
+
+  <div class="loading" *ngIf="loading">Chargement...</div>
+
+  <table class="table" *ngIf="!loading">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Statut</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers">
+        <td>{{ user.prenom }} {{ user.nom }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.status }}</td>
+        <td><button (click)="remove(user)">Supprimer</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -62,7 +62,8 @@ export class EnseignantDemandesPageComponent implements OnInit {
   applyFilters(): void {
     const q = this.searchText.trim().toLowerCase();
     this.filtered = (this.demandes ?? []).filter((d) => {
-      const full = `${d.titre_stage ?? ''} ${d.entreprise ?? ''} ${d.etudiant_prenom ?? ''} ${d.etudiant_nom ?? ''}`.toLowerCase();
+      const full =
+        `${d.titre_stage ?? ''} ${d.entreprise ?? ''} ${d.specialite ?? ''} ${d.etudiant_prenom ?? ''} ${d.etudiant_nom ?? ''}`.toLowerCase();
       const okText = !q || full.includes(q);
       const okStatus = !this.selectedStatus || d.status === this.selectedStatus;
       return okText && okStatus;

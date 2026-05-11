@@ -3,7 +3,7 @@
   <!-- ═══ HEADER ═══ -->
   <div class="val-header">
     <div class="val-header-left">
-      <a routerLink="/admin-dashboard" class="back-link">
+      <a routerLink="/admin-dashboard/accueil" class="back-link">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -13,7 +13,7 @@
         <h1 class="val-title">Validation des comptes</h1>
         <span class="val-subtitle">Gérer les inscriptions en attente</span>
       </div>
-      <a routerLink="/liste-utilisateur" class="back-link">Voir la liste des utilisateurs</a>
+      <a routerLink="/admin-dashboard/utilisateurs" class="back-link">Voir la liste des utilisateurs</a>
     </div>
     <div class="val-header-right" *ngIf="pendingUsers.length > 0">
       <span class="chip-pending">

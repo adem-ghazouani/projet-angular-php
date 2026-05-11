@@ -29,6 +29,7 @@ export class EtudiantDemandePageComponent implements OnInit {
     this.form = this.fb.group({
       titre_stage: ['', Validators.required],
       entreprise: ['', Validators.required],
+      specialite: ['', Validators.required],
       duree: [''],
       description: ['']
     });
@@ -83,7 +84,13 @@ export class EtudiantDemandePageComponent implements OnInit {
       next: () => {
         this.message = 'Demande envoyée.';
         this.submitting = false;
-        this.form.reset({ titre_stage: '', entreprise: '', duree: '', description: '' });
+        this.form.reset({
+          titre_stage: '',
+          entreprise: '',
+          specialite: '',
+          duree: '',
+          description: ''
+        });
         this.loadMine();
       },
       error: (err) => {

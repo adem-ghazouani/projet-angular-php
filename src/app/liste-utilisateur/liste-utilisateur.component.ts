@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 import { AuthService } from '../service/auth.service';
 import { User, UserRole, UserStatus } from '../user.model';
 import { UserService } from '../service/user.service';
@@ -11,7 +12,7 @@ type UserForm = Partial<User> & { mot_de_passe?: string };
   templateUrl: './liste-utilisateur.component.html',
   styleUrls: ['./liste-utilisateur.component.scss']
 })
-export class ListeUtilisateurComponent implements OnInit {
+export class ListeUtilisateurComponent implements OnInit, OnDestroy {
   users: User[] = [];
   filteredUsers: User[] = [];
   userForm: UserForm = this.createEmptyForm();
@@ -28,6 +29,8 @@ export class ListeUtilisateurComponent implements OnInit {
   readonly roles: UserRole[] = ['enseignant', 'etudiant'];
   readonly statuses: UserStatus[] = ['pending', 'approved', 'rejected'];
 
+  private navSub?: Subscription;
+
   constructor(
     private userService: UserService,
     private authService: AuthService,
@@ -38,6 +41,9 @@ export class ListeUtilisateurComponent implements OnInit {
   ngOnInit(): void {
     this.isAdmin = this.authService.getRole() === 'admin';
     this.configurePage();
+    this.navSub = this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe(() => this.configurePage());
     this.route.queryParamMap.subscribe((params) => {
       const status = params.get('status');
       this.message =
@@ -47,6 +53,10 @@ export class ListeUtilisateurComponent implements OnInit {
             ? 'Utilisateur modifié'
             : '';
     });
+  }
+
+  ngOnDestroy(): void {
+    this.navSub?.unsubscribe();
   }
 
   loadUsers(): void {
@@ -112,7 +122,7 @@ export class ListeUtilisateurComponent implements OnInit {
       // En mode édition, on autorise id et on utilise updateUser
       this.userService.updateUser(this.userForm.id, payload).subscribe({
         next: () => {
-          this.router.navigate(['/liste-utilisateur'], {
+          this.router.navigate(['/admin-dashboard/utilisateurs'], {
             queryParams: { status: 'updated' }
           });
         },
@@ -127,7 +137,7 @@ export class ListeUtilisateurComponent implements OnInit {
     this.userService.createUser(payload).subscribe({
       next: (result) => {
         // Vérifier que la réponse a bien créé l'utilisateur (optionnel)
-        this.router.navigate(['/liste-utilisateur'], {
+        this.router.navigate(['/admin-dashboard/utilisateurs'], {
           queryParams: { status: 'added' }
         });
       },
@@ -141,7 +151,7 @@ export class ListeUtilisateurComponent implements OnInit {
     if (!this.isAdmin) {
       return;
     }
-    this.router.navigate(['/liste-utilisateur/modifier', u.id]);
+    this.router.navigate(['/admin-dashboard/utilisateurs/modifier', u.id]);
   }
 
   remove(id?: number): void {
@@ -172,18 +182,21 @@ export class ListeUtilisateurComponent implements OnInit {
   }
 
   private configurePage(): void {
-    const path = this.route.snapshot.routeConfig?.path ?? 'liste-utilisateur';
-    if (path === 'liste-utilisateur/ajouter') {
+    const url = (this.router.url || '').split('?')[0];
+
+    if (url.includes('/utilisateurs/ajouter') || url.includes('/liste-utilisateur/ajouter')) {
       this.mode = 'add';
       this.editing = false;
       this.resetForm(false);
       return;
     }
 
-    if (path === 'liste-utilisateur/modifier/:id') {
+    const mod =
+      url.match(/\/utilisateurs\/modifier\/(\d+)/) || url.match(/\/liste-utilisateur\/modifier\/(\d+)/);
+    if (mod) {
       this.mode = 'edit';
       this.editing = true;
-      const id = Number(this.route.snapshot.paramMap.get('id'));
+      const id = Number(mod[1]);
       if (!id) {
         this.errorMessage = 'Utilisateur introuvable.';
         return;
