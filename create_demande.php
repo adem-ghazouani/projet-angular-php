@@ -13,7 +13,8 @@ try {
         !$data ||
         empty($data->user_id) ||
         empty($data->titre_stage) ||
-        empty($data->entreprise)
+        empty($data->entreprise) ||
+        empty($data->specialite)
     ) {
         throw new Exception("Champs requis manquants");
     }
@@ -25,13 +26,14 @@ try {
         throw new Exception("Erreur de connexion a la base de donnees");
     }
 
-    $sql = "INSERT INTO demandes (user_id, titre_stage, entreprise, duree, description, status)
-            VALUES (:user_id, :titre_stage, :entreprise, :duree, :description, 'pending')";
+    $sql = "INSERT INTO demandes (user_id, titre_stage, entreprise, specialite, duree, description, status)
+            VALUES (:user_id, :titre_stage, :entreprise, :specialite, :duree, :description, 'pending')";
     $stmt = $conn->prepare($sql);
 
     $stmt->bindParam(":user_id", $data->user_id, PDO::PARAM_INT);
     $stmt->bindParam(":titre_stage", $data->titre_stage);
     $stmt->bindParam(":entreprise", $data->entreprise);
+    $stmt->bindParam(":specialite", $data->specialite);
     $duree = isset($data->duree) && $data->duree !== "" ? $data->duree : null;
     $description = isset($data->description) && $data->description !== "" ? $data->description : null;
 
