@@ -1,27 +1,19 @@
-# Projet
+# Gestion des rapports de stage
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
+## Présentation
 
-## Development server
+Ce projet universitaire consiste à développer une application de gestion des rapports de stage. Elle facilite le suivi des étudiants, des encadrants, des rapports et des évaluations.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+L'objectif est de centraliser les informations liées aux stages et de simplifier le travail des étudiants et des enseignants.
 
-## Code scaffolding
+## Fonctionnalités principales
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* Gestion des étudiants et des encadrants.
+* Dépôt et consultation des rapports de stage.
+* Validation des rapports par les enseignants.
+* Gestion des notes des étudiants.
 
-## Build
+## Auteur
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+**Adem Ghazouani**
+Étudiant en 3ème année Licence Développement des Systèmes d'Information (DSI) à l'ISET Jendouba.
